@@ -1,0 +1,26 @@
+- name: checking that cloudamize is installed
+  win_stat:
+          path: '{{window_cloudamize_agent_path}}'
+  register: cloudamize_agent_file_stat_result
+  when:
+          - ansible_os_family == "Windows"
+
+- name: Prints if Cloudamize is installed
+  debug:
+          msg: "Cloudamize will be uninstalled"
+  when:
+          - ansible_os_family == "Windows"
+          - cloudamize_agent_file_stat_result.stat.exists == true
+
+- name: Prints if cloudamize is not installed
+  debug:
+          msg: "Cloudamize is already uninstalled"
+  when:
+          - ansible_os_family == "Windows"
+          - cloudamize_agent_file_stat_result.stat.exists == false
+
+- name: running cloudamize uninstallation
+  win_command: '{{uninstall_cloudamize_in_windows}}'
+  when:
+          - ansible_os_family == "Windows"
+          - cloudamize_agent_file_stat_result.stat.exists == true

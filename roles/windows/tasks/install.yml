@@ -1,0 +1,36 @@
+- name: downloading-cloudamize
+  win_get_url:
+          url: '{{windows_cloudamize_download_url}}'
+          dest: '{{windows_cloudamize_download_destination}}'
+  when:
+          - ansible_os_family == "Windows"
+
+- name: checking is cloudamize is installed in windows
+  win_stat:
+          path: '{{window_cloudamize_agent_path}}'
+  register: cloudamize_agent_file_stat_result
+  when:
+          - ansible_os_family == "Windows"
+     
+- name: Prints if Cloudamize is installed           
+  debug:
+          msg: "Cloudamize is already installed"
+  when:
+          - ansible_os_family == "Windows"
+          - cloudamize_agent_file_stat_result.stat.exists == true
+
+- name: Prints if cloudamize is not installed
+  debug:
+          msg: "Cloudamize will be installed"
+  when:
+          - ansible_os_family == "Windows"
+          - cloudamize_agent_file_stat_result.stat.exists == false
+
+- name: running-cloudamize-installation
+  win_command: '{{install_cloudamize_in_windows}}'
+  args:
+          chdir: '{{windows_cloudamize_download_destination}}'
+  when:
+          - ansible_os_family == "Windows"
+          - cloudamize_agent_file_stat_result.stat.exists == false
+

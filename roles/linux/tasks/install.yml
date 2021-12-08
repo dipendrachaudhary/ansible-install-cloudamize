@@ -1,0 +1,99 @@
+####### Debian #######
+
+- name: Debian - Downloading Couldamize for Linux
+  become: true
+  become_user: '{{become_user_linux}}'
+  get_url:
+          url: '{{linux_cloudamize_download_url}}'
+          dest: '{{linux_cloudamize_download_destination}}'
+  when:
+          - ansible_os_family == "Debian"
+
+- name: Debian - chmod-cloudamize
+  become: true
+  become_user: '{{become_user_linux}}'
+  file: dest=/root/installCloudamizeAgentV2.sh mode=a+x
+  when:
+          - ansible_os_family == "Debian"
+
+- name: Debian - Checking that the cloudamize file exists
+  stat:
+          path: '{{start_ccagent_path}}'
+  register: stat_result
+  when:
+          - ansible_os_family == "Debian"
+
+- name: Debian - Prints if Cloudamize is installed
+  debug:
+          msg: "Cloudamize is already installed"
+  when:
+          - ansible_os_family == "Debian"
+          - stat_result.stat.exists == true
+
+- name: Debian - Prints if Cloudamize is not installed
+  debug:
+          msg: "Cloudamize will be installed"
+  when:
+          - ansible_os_family == "Debian"
+          - stat_result.stat.exists == false
+
+- name: Debian - running-cloudamize-installation
+  become: true
+  become_user: '{{become_user_linux}}'
+  environment: '{{env_vars}}'
+  shell: '{{shell_cloudamize_run_file_path}}'
+  when:
+          - ansible_os_family == "Debian"
+          - stat_result.stat.exists == False
+
+
+
+
+####### RedHat #######
+
+- name: RedHat - Downloading Couldamize for Linux
+  become: true
+  become_user: '{{become_user_linux}}'
+  get_url:
+          url: '{{linux_cloudamize_download_url}}'
+          dest: '{{linux_cloudamize_download_destination}}'
+  when:
+          - ansible_os_family == "RedHat"
+
+- name: RedHat - chmod-cloudamize
+  become: true
+  become_user: '{{become_user_linux}}'
+  file: dest=/root/installCloudamizeAgentV2.sh mode=a+x
+  when:
+         - ansible_os_family == "RedHat"
+
+- name: RedHat - Checking that the cloudamize file exists
+  stat:
+          path: '{{start_ccagent_path}}'
+  register: stat_result
+  when:
+          - ansible_os_family == "RedHat"
+
+- name: RedHat - Prints if Cloudamize is installed
+  debug:
+          msg: "Cloudamize is already installed"
+  when:
+          - ansible_os_family == "RedHat"
+          - stat_result.stat.exists == true
+
+- name: RedHat - Prints if Cloudamize is not installed
+  debug:
+          msg: "Cloudamize will be installed"
+  when:
+          - ansible_os_family == "RedHat"
+          - stat_result.stat.exists == false
+
+- name: RedHat - running-cloudamize-installation
+  become: true
+  become_user: '{{become_user_linux}}'
+  environment: '{{env_vars}}'
+  shell: '{{shell_cloudamize_run_file_path}}'
+  when:
+          - ansible_os_family == "RedHat"
+          - stat_result.stat.exists == False
+

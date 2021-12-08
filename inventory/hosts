@@ -1,0 +1,17 @@
+[linux]
+Ubuntu ansible_host=18.236.185.32 ansible_ssh_pass=password ansible_port=22 ansible_user=root
+
+Amazon-linux ansible_host=52.32.125.249 ansible_ssh_pass=password ansible_port=22 ansible_user=root
+
+RedHat-linux-7 ansible_host=52.32.123.100 ansible_ssh_pass=password ansible_port=22 ansible_user=root
+
+RedHat-linux-8 ansible_host=54.244.190.209 ansible_ssh_pass=password ansible_port=22 ansible_user=root
+
+CentOS-7 ansible_host=148.251.146.83 ansible_ssh_pass=password ansible_port=22 ansible_user=root
+
+[windows]
+Windows_server_2012 ansible_host=52.39.79.212 ansible_user=Administrator ansible_password="password" ansible_port=5986 ansible_connection=winrm ansible_winrm_server_cert_validation=ignore ansible_winrm_kerberos_delegation=true
+
+Windows_server_2016 ansible_host=54.190.52.186 ansible_user=Administrator ansible_password="password" ansible_port=5986 ansible_connection=winrm ansible_winrm_server_cert_validation=ignore ansible_winrm_kerberos_delegation=true
+
+Windows_server_2019 ansible_host=54.189.147.190 ansible_user=Administrator ansible_password="password" ansible_port=5986 ansible_connection=winrm ansible_winrm_server_cert_validation=ignore ansible_winrm_kerberos_delegation=true

@@ -1,0 +1,45 @@
+#######Variables for linux#######
+##Install for Linux##
+
+become_user_linux: "root"
+
+linux_cloudamize_download_url: "https://agentmanager1.cloudamize.com/cxf/downloadFile/installCloudamizeAgentV2.sh"
+
+linux_cloudamize_download_destination: "/root/installCloudamizeAgentV2.sh"
+
+env_vars:
+        CLOUDAMIZE_CUSTOMER_KEY: "2fb452de378d0fc8b8c3f5187d6a5994bb3a29a42d0ae57066e75e13dd9e77a2"
+
+start_ccagent_path: "/usr/local/cloudamize/bin/start_ccagent.sh"
+
+shell_cloudamize_run_file_path: "sh /root/installCloudamizeAgentV2.sh"
+
+
+##Uninstall for Linux##
+
+start_uninstall_path: "/usr/local/cloudamize/bin/uninstall_cmizeagent.sh"
+
+shell_cloudamize_run_uninstall: "sh /usr/local/cloudamize/bin/uninstall_cmizeagent.sh"
+
+cloudamize_directory_path: "/usr/local/cloudamize"
+
+
+
+
+
+######## Variables for windows########
+
+windows_cloudamize_download_url: "https://agentmanager1.cloudamize.com/cxf/downloadFile/cloudamizeAgent.msi"
+
+windows_cloudamize_download_destination: 'C:\Users\Administrator\Downloads\'
+
+install_cloudamize_in_windows: msiexec /i cloudamizeAgent.msi customerkey=2fb452de378d0fc8b8c3f5187d6a5994bb3a29a42d0ae57066e75e13dd9e77a2 /qn
+
+
+##Uninstall Cloudamize in Windows##
+
+window_cloudamize_agent_path: 'C:\Program Files (x86)\Cloudamize\CloudamizeAgent.exe'
+
+uninstall_cloudamize_in_windows: wmic product where name="Cloudamize Windows Agent" call uninstall
+
+window_cloudamize_directory_path: 'C:\Program Files (x86)\Cloudamize'

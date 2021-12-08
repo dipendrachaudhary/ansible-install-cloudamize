@@ -1,0 +1,65 @@
+####### Debian #######
+
+- name: Debian - Checking that the uninstall file of cloudamize file exists
+  stat:
+          path: '{{start_uninstall_path}}'
+  register: linux_uninstall_file_stat_result
+  when:
+          - ansible_os_family == "Debian"
+
+- name: Debian - Prints if Cloudamize is installed
+  debug:
+          msg: "Cloudamize will be uninstalled"
+  when:
+          - ansible_os_family == "Debian"
+          - linux_uninstall_file_stat_result.stat.exists == true
+
+- name: Debian - Prints if Cloudamize is not installed
+  debug:
+          msg: "Cloudamize is already uninstalled"
+  when:
+          - ansible_os_family == "Debian"
+          - linux_uninstall_file_stat_result.stat.exists == false
+
+- name: Debian - running-cloudamize-uninstallation
+  become: true
+  become_user: '{{become_user_linux}}'
+  environment: '{{env_vars}}'
+  shell: '{{shell_cloudamize_run_uninstall}}'
+  when:
+          - ansible_os_family == "Debian"
+          - linux_uninstall_file_stat_result.stat.exists == true
+
+
+
+####### RedHat #######
+
+- name: RedHat - Checking that the uninstall file of cloudamize file exists
+  stat:
+          path: '{{start_uninstall_path}}'
+  register: linux_uninstall_file_stat_result
+  when:
+          - ansible_os_family == "RedHat"
+
+- name: RedHat - Prints if Cloudamize is installed
+  debug:
+          msg: "Cloudamize will be uninstalled"
+  when:
+          - ansible_os_family == "RedHat"
+          - linux_uninstall_file_stat_result.stat.exists == true
+
+- name: RedHat - Prints if Cloudamize is not installed
+  debug:
+          msg: "Cloudamize is already uninstalled"
+  when:
+          - ansible_os_family == "RedHat"
+          - linux_uninstall_file_stat_result.stat.exists == false
+
+- name: RedHat - running-cloudamize-uninstallation
+  become: true
+  become_user: '{{become_user_linux}}'
+  environment: '{{env_vars}}'
+  shell: '{{shell_cloudamize_run_uninstall}}'
+  when:
+          - ansible_os_family == "RedHat"
+          - linux_uninstall_file_stat_result.stat.exists == true
